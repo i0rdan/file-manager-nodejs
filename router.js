@@ -4,6 +4,7 @@ import { writeCurrDirInfoMessage } from './src/utils/writeCurrDirInfoMessage.js'
 import { moveUp } from './src/modules/navigation/move-up.js';
 import { changeDir } from './src/modules/navigation/change-dir.js';
 import { showDirContent } from './src/modules/navigation/show-dir-content.js';
+import { handleOsRequest } from './src/modules/os/os-router.js';
 
 let currDir = homedir();
 const routes = {
@@ -11,6 +12,7 @@ const routes = {
   exit: '.exit',
   changeDir: 'cd',
   showDirContent: 'ls',
+  showOsInfo: 'os',
 };
 
 export async function routerController(data) {
@@ -29,6 +31,9 @@ export async function routerController(data) {
       break;
     case routes.showDirContent:
       await showDirContent(currDir);
+      break;
+    case routes.showOsInfo:
+      handleOsRequest(commandArgs[1]);
       break;
     default:
       writeCurrDirInfoMessage(currDir);
