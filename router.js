@@ -5,6 +5,7 @@ import { moveUp } from './src/modules/navigation/move-up.js';
 import { changeDir } from './src/modules/navigation/change-dir.js';
 import { showDirContent } from './src/modules/navigation/show-dir-content.js';
 import { handleOsRequest } from './src/modules/os/os-router.js';
+import { calculateHash } from './src/modules/hash/calculateHash.js';
 
 let currDir = homedir();
 const routes = {
@@ -13,6 +14,7 @@ const routes = {
   changeDir: 'cd',
   showDirContent: 'ls',
   showOsInfo: 'os',
+  calculateHash: 'hash',
 };
 
 export async function routerController(data) {
@@ -34,6 +36,9 @@ export async function routerController(data) {
       break;
     case routes.showOsInfo:
       handleOsRequest(commandArgs[1]);
+      break;
+    case routes.calculateHash:
+      await calculateHash(currDir, commandArgs[1]);
       break;
     default:
       writeCurrDirInfoMessage(currDir);
