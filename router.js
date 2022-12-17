@@ -12,6 +12,8 @@ import { renameFile } from './src/modules/file-operations/rename-file.js';
 import { copyFile } from './src/modules/file-operations/copy-file.js';
 import { removeFile } from './src/modules/file-operations/remove-file.js';
 import { moveFile } from './src/modules/file-operations/move-file.js';
+import { compressFile } from './src/modules/compressing/compress.js';
+import { decompressFile } from './src/modules/compressing/decompress.js';
 
 let currDir = homedir();
 const routes = {
@@ -27,6 +29,8 @@ const routes = {
   copyFile: 'cp',
   removeFile: 'rm',
   moveFile: 'mv',
+  compress: 'compress',
+  decompress: 'decompress',
 };
 
 export async function routerController(data) {
@@ -69,6 +73,12 @@ export async function routerController(data) {
       break;
     case routes.moveFile:
       await moveFile(currDir, commandArgs[1], commandArgs[2]);
+      break;
+    case routes.compress:
+      await compressFile(currDir, commandArgs[1], commandArgs[2]);
+      break;
+    case routes.decompress:
+      await decompressFile(currDir, commandArgs[1], commandArgs[2]);
       break;
     default:
       writeCurrDirInfoMessage(currDir);
