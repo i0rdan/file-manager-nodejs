@@ -34,9 +34,7 @@ const routes = {
 };
 
 export async function routerController(data) {
-  const command = data.toString().slice(0, -2);
-  const commandArgs = command.split(' ');
-  const [commandType] = commandArgs;
+  const [commandType, ...commandArgs] = data.toString().slice(0, -2).split(' ');
 
   switch (commandType) {
     case routes.exit:
@@ -45,40 +43,40 @@ export async function routerController(data) {
       currDir = await moveUp(currDir);
       break;
     case routes.changeDir:
-      currDir = await changeDir(currDir, commandArgs[1]);
+      currDir = await changeDir(currDir, ...commandArgs);
       break;
     case routes.showDirContent:
       await showDirContent(currDir);
       break;
     case routes.showOsInfo:
-      handleOsRequest(commandArgs[1]);
+      handleOsRequest(...commandArgs);
       break;
     case routes.calculateHash:
-      await calculateHash(currDir, commandArgs[1]);
+      await calculateHash(currDir, ...commandArgs);
       break;
     case routes.readFile:
-      await readFileContent(currDir, commandArgs[1]);
+      await readFileContent(currDir, ...commandArgs);
       break;
     case routes.createFile:
-      await createFile(currDir, commandArgs[1]);
+      await createFile(currDir, ...commandArgs);
       break;
     case routes.renameFile:
-      await renameFile(currDir, commandArgs[1], commandArgs[2]);
+      await renameFile(currDir, ...commandArgs);
       break;
     case routes.copyFile:
-      await copyFile(currDir, commandArgs[1], commandArgs[2]);
+      await copyFile(currDir, ...commandArgs);
       break;
     case routes.removeFile:
-      await removeFile(currDir, commandArgs[1]);
+      await removeFile(currDir, ...commandArgs);
       break;
     case routes.moveFile:
-      await moveFile(currDir, commandArgs[1], commandArgs[2]);
+      await moveFile(currDir, ...commandArgs);
       break;
     case routes.compress:
-      await compressFile(currDir, commandArgs[1], commandArgs[2]);
+      await compressFile(currDir, ...commandArgs);
       break;
     case routes.decompress:
-      await decompressFile(currDir, commandArgs[1], commandArgs[2]);
+      await decompressFile(currDir, ...commandArgs);
       break;
     default:
       writeCurrDirInfoMessage(currDir);
